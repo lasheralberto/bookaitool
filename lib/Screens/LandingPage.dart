@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,6 +11,7 @@ class LandingPage extends StatelessWidget {
           // Background GIF
           Image.network(
             'https://media.giphy.com/media/u00DkhlFRgkei3d3jG/giphy.gif',
+              
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -28,11 +31,10 @@ class LandingPage extends StatelessWidget {
                     Navigator.pushReplacementNamed(context, '/home');
                   },
                   style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    primary: Colors.transparent, // Transparent background
-                    padding: EdgeInsets.all(16.0), // Adjust button size
+                    shape: const CircleBorder(), backgroundColor: Colors.transparent, // Transparent background
+                    padding: const EdgeInsets.all(16.0), // Adjust button size
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_forward,
                     size: 40.0, // Adjust icon size
                     color: Colors.white, // Icon color

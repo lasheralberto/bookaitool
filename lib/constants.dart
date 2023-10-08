@@ -1,16 +1,86 @@
 import 'package:flutter/material.dart';
 
 class ColorConstants {
-  static Color colortheme = Colors.blueGrey.shade900;
-  static Color colorAppBar = Colors.blueGrey.shade900;
+  static Color colortheme = const Color.fromRGBO(84, 84, 84, 1);
+  static Color colorAppBar = const Color.fromRGBO(84, 84, 84, 1);
   static Color colorCard = Colors.blueGrey.shade50;
+  static Color colorHeaders = Colors.amber.shade800;
+  static Color colorTexts = Colors.blueGrey.shade50;
+  static Color colorButtons = const Color.fromARGB(218, 255, 145, 0);
 }
+
+class StyleConstants {
+  static BorderRadius border = BorderRadius.circular(20.0);
+}
+
+class PayConstants {
+  static String publishable_key = 'pk_live_36swzHfwDCLVNpFHwkPODUK9';
+  static String private_key =
+      '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';
+  static String price_id = 'price_1NyJ3KFS1UGHVPAZL8GjuTO0';
+}
+
+class AppUrl {
+  static String localhost = 'http://localhost:59815';
+}
+
+class TextFieldsTexts {
+  static const IdeaTextField = 'Describe your vision';
+  static const StyleTextField = 'Style it up';
+  static const FormatTextField = 'Format page';
+  static const TextImageQuality = 'Image quality';
+}
+
+List<Map<String, int>> pageSizeOptions = [
+  {"": 2},
+  {"256x256": 1},
+  {"512x512": 2},
+  {"1024x1024": 2}
+];
 
 List<String> formatOptions = [
   '',
   'Vertical',
   'Portrait',
   'Landscape',
+];
+
+final List<Map<String, String>> steps = [
+  {
+    'title': "Describe Your Vision",
+    'description':
+        "Imagine guiding your readers through enchanting locales and cultural treasures. Use vivid descriptions to outline your vision for an unforgettable reading experience. ",
+    'example':
+        "Example: Picture yourself in a bustling market in Marrakech, with the aroma of exotic spices filling the air. Describe the vibrant colors, the sounds of merchants, and the taste of authentic street food."
+  },
+  {
+    'title': "Style it Up",
+    'description':
+        "Consider the aesthetic of your book. Is it a contemporary masterpiece with modern design elements, or a classic gem with timeless elegance? Define its artistic style.",
+    'example':
+        "Example: If you're going for a modern style, think of sleek, minimalist cover designs and crisp typography. For a classic touch, imagine ornate borders and vintage illustrations."
+  },
+  {
+    'title': "Diversify Your Portfolio",
+    'description':
+        "Don't limit yourself to one idea. Expand your repertoire with a range of creative content, from striking visuals to insightful prose.",
+    'example':
+        "Example: Include a mix of travel anecdotes, captivating photographs, and engaging interviews with local artists. Offer a diverse reading experience."
+  },
+  {
+    'title': "Visualize Your Book",
+    'description':
+        "Envision the final product. Each idea contributes to a rich tapestry of content, inviting readers on a visual and literary journey.",
+    'example':
+        "Example: Close your eyes and voilá! Your PDF is ready to download."
+  },
+  {
+    'title': "Publish Your Masterpiece",
+    'description':
+        "Submit your ideas and witness the transformation. Your vision will be woven into a beautifully designed book, ready to captivate art and leisure enthusiasts worldwide.",
+    'example':
+        "Example: Once your content is ready, collaborate with talented designers and editors. Imagine holding the printed book in your hands, a culmination of your creative journey."
+  },
 ];
 
 List<String> randomMessages = [

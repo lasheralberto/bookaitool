@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   var title;
-    CustomAppBar({super.key, required this.title});
+  bool hasTitle;
+  CustomAppBar({super.key, required this.title, required this.hasTitle});
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -14,34 +15,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0, // Remove the app bar shadow
       backgroundColor:
           ColorConstants.colorAppBar, // Set the background color to blue
-      title: Text(
-        this.title,
-        style: TextStyle(
-          fontFamily: 'Roboto', // Use Google's Roboto font
-          fontWeight: FontWeight.bold, // Apply a bold font weight
-          fontSize: 24, // Increase the font size
-        ),
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.search, // Add a search icon (you can change this)
-            color: Colors.white, // Set the icon color to white
-          ),
-          onPressed: () {
-            // Handle the search action
-          },
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.settings, // Add a settings icon (you can change this)
-            color: Colors.white, // Set the icon color to white
-          ),
-          onPressed: () {
-            // Handle the settings action
-          },
-        ),
-      ],
+      title: hasTitle
+          ? Text(title)
+          : Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(
+                '/images/inkwiz.png',
+                height: 30,
+              ),
+            ),
+      //centerTitle: true,
+      actions: const [],
     );
   }
 }
