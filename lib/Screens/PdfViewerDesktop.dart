@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'dart:js' as js;
 
-
 class PdfScreenSyncFussionDesktop extends StatefulWidget {
   final Uint8List pdfbytes;
   final void Function(bool) onDeactivateProcessPdfMessage;
@@ -44,32 +43,49 @@ class _PdfScreenSyncFussionDesktopState
                   BorderRadius.circular(16.0), // Adjust the radius as needed
             ),
             elevation: 4.0, // Add elevation for a card-like effect
-            child: Column(
-              children: [
-                ListTile(
-                  trailing: ElevatedButton(
-                    onPressed: () async {
-                      savePdfLocally(widget.pdfbytes);
+            child: Column(children: [
+              Positioned(
+                  top: 8,
+                  right: 8,
+                  child: InkWell(
+                    onTap: () {
+                      // Define the action when the button is pressed
+                      Navigator.pushNamed(context, AppRoutes.home);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          ColorConstants.colorButtons, // Background color
-                      foregroundColor: Colors.white, // Text color
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      child: const Icon(Icons.arrow_back_ios),
                     ),
-                    child: const Icon(
-                      Icons.downloading_rounded,
-                      size: 24.0, // Icon size
+                  )),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListTile(
+                      trailing: ElevatedButton(
+                        onPressed: () async {
+                          savePdfLocally(widget.pdfbytes);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              ColorConstants.colorButtons, // Background color
+                          foregroundColor: Colors.white, // Text color
+                        ),
+                        child: const Icon(
+                          Icons.downloading_rounded,
+                          size: 24.0, // Icon size
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SizedBox(
+                          height: cons.maxHeight - 100,
+                          child: SfPdfViewer.memory(widget.pdfbytes)),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                      height: cons.maxHeight - 100,
-                      child: SfPdfViewer.memory(widget.pdfbytes)),
-                ),
-              ],
-            ),
+              ),
+            ]),
           ),
         );
       },

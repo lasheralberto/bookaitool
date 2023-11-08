@@ -20,14 +20,21 @@ class PdfScreenSyncFussionMobile extends StatefulWidget {
   State<PdfScreenSyncFussionMobile> createState() => _PdfScreenSyncFussionMobileState();
 }
 
-class _PdfScreenSyncFussionMobileState extends State<PdfScreenSyncFussionMobile> {
+class _PdfScreenSyncFussionMobileState extends State<PdfScreenSyncFussionMobile> with TickerProviderStateMixin {
   bool backButtonPressed = false;
+  TabController? _tabController;
 
   void savePdfLocally(pdfContent) {
     const fileName = 'example.pdf'; // Specify the desired file name
 
     // Call the JavaScript function
     js.context.callMethod('saveFile', [fileName, pdfContent]);
+  }
+
+   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this); // 2 tabs
   }
 
   @override
@@ -52,6 +59,7 @@ class _PdfScreenSyncFussionMobileState extends State<PdfScreenSyncFussionMobile>
         ),
         backgroundColor: ColorConstants.colortheme,
         appBar: CustomAppBar(
+           
           title: ' ',
           hasTitle: true,
         ),

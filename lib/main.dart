@@ -1,14 +1,28 @@
 import 'dart:html';
 import 'package:bookaitool/Screens/HomePageDesktop.dart';
 import 'package:bookaitool/Screens/SuccessPaymentPage.dart';
+import 'package:bookaitool/constants.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:bookaitool/Screens/LandingPage.dart';
 import 'package:flutter/material.dart';
 import 'Screens/HomePageMobile.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+import 'loginpage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Stripe.publishableKey = PayConstants.publishable_key;
+  GoogleSignIn googleSignIn = GoogleSignIn(
+    clientId: ApiKeys.GoogleAuthSignIn,
+  );
 
   runApp(const MyApp());
 }
@@ -25,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     if (window.screen!.width! < 768) {
       isDesktop = false;
       // Add your mobile-specific code here
@@ -44,10 +59,13 @@ class _MyAppState extends State<MyApp> {
       ),
       home: LiquidSwipe(pages: [
         const LandingPage(),
-        isDesktop == true ?   MyHomePageDesktop() :   MyHomePageMobile()
+        isDesktop == true ? const MyHomePageDesktop() : const MyHomePageMobile()
       ]),
       routes: {
-        '/home': (context) => isDesktop == true
+        AppRoutes.landing: (context) => const LandingPage(),
+        AppRoutes.signUp: (context) => const SignUpPage(),
+        AppRoutes.signIn: (context) => const SignInPage(),
+        AppRoutes.home: (context) => isDesktop == true
             ? const MyHomePageDesktop()
             : const MyHomePageMobile(),
         '/success': (_) => const SuccessPaymentPage()

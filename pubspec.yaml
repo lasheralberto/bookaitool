@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.1 <4.0.0'
+  sdk: '>=3.1.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -41,9 +41,21 @@ dependencies:
   js: ^0.6.7
   liquid_swipe: ^3.1.0
   dio: ^5.3.3
-  flutter_stripe_web: ^4.4.0
   flutter_onboarding_slider: ^1.0.10
- 
+  pay: ^1.1.2
+  stripe_sdk: ^5.0.0
+  flutter_credit_card: ^4.0.1
+  flutter_stripe: ^9.4.0
+  flutter_stripe_web: ^4.4.0
+  multi_dropdown: ^2.1.0
+  firebase_auth: ^4.12.1
+  firebase_dynamic_links: ^5.4.3
+  cloud_firestore: ^4.12.2
+  firebase_core: ^2.21.0
+  random_avatar: ^0.0.8
+  easy_loading_button: ^0.3.2
+  google_sign_in: ^6.1.5
+  google_sign_in_web: ^0.12.1
 
 dev_dependencies:
   flutter_test:
@@ -68,8 +80,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  #assets:
-     #- images/
+  assets:
+     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

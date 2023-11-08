@@ -3,26 +3,84 @@
 library stripe;
 
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:bookaitool/constants.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:js/js.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-Future<Uint8List> fetchPdfDataBytes(ideas, styles, format,pageSize, context) async {
+Future<Map<String, dynamic>> fetchPdfDataBytes(
+    Map<String, String> introList,
+    List<String> langlist,
+    List<String> ideas,
+    List<String> styles,
+    List<double> format,
+    String pageSize,
+    String pageOrChapter,
+    context) async {
+  List<String> languageList = langlist.toSet().toList();
+
   final response = await http
       .post(Uri.parse('https://doogiapp.azurewebsites.net/GeneratePdf/'),
           body: jsonEncode(<String, dynamic>{
-            "spain_ideas": ideas,
+            "intro_variables": introList,
+            "lang_list": languageList,
+            "ideas_list": ideas,
             "styles_list": styles,
             "format": format,
-            "page_size":pageSize
+            "img_size": pageSize,
+            "manual_intro": true,
+            "open_ai_key": ApiKeys.open_ai_key
           }),
           headers: <String, String>{'Content-Type': 'application/json'});
 
+  introList.clear();
+  languageList.clear();
+  ideas.clear();
+  styles.clear();
+  format.clear();
+  pageSize = '';
+  pageOrChapter = '';
+
+  return {'statusCode': response.statusCode, 'pdfData': response.bodyBytes};
+}
+
+Future<void> launchStripePaymentPage() async {
+  const url = "https://buy.stripe.com/cN28AAfNH9g89C8288";
+
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+Future<dynamic> createTestPaymentSheet(amount, currency) async {
+  final response = await http.post(
+      Uri.parse('https://doogiapp.azurewebsites.net/PayStripe/'),
+      body:
+          jsonEncode(<String, dynamic>{"amount": amount, "currency": currency}),
+      headers: <String, String>{'Content-Type': 'application/json'});
+
   if (response.statusCode == 200) {
-    return response.bodyBytes;
+    //Step 2: Initialize payment sheet
+    var paymentIntent = response.body;
+    await Stripe.instance
+        .initPaymentSheet(
+            paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent,
+          style: ThemeMode.dark,
+          merchantDisplayName: 'InkWiz',
+        ))
+        .then((value) => {});
+
+    //Step 3: Display payment sheet
+    try {
+      await Stripe.instance
+          .presentPaymentSheet()
+          .then((value) => {print('Success')});
+    } catch (e) {}
   } else {
     print('Failed to fetch PDF data');
     throw Exception('Failed to fetch PDF data');
@@ -32,18 +90,16 @@ Future<Uint8List> fetchPdfDataBytes(ideas, styles, format,pageSize, context) asy
 //strype payment  https://fidev.io/stripe-checkout-in-flutter-web/
 void redirectToCheckout(BuildContext _, quantity, priceId) async {
   final stripe = StripePay(PayConstants.private_key);
+
   stripe.redirectToCheckout(
     CheckoutOptions(
         lineItems: [
           LineItem(quantity: quantity, price: priceId),
         ],
         mode: 'payment',
-        successUrl: 'http://localhost:52111/#/success',
-        cancelUrl: 'http://localhost:52111/#/cancel'),
+        successUrl: 'http://localhost:57329/#/success',
+        cancelUrl: 'http://localhost:57329/#/cancel'),
   );
-
-  
-  
 }
 
 @JS()
@@ -79,3 +135,21 @@ class LineItem {
   external factory LineItem({String price, int quantity});
 }
 
+void payment(amount) async {
+  Map<String, dynamic>? paymentIntent;
+  try {
+    Map<String, dynamic> body = {'amount': amount, 'currency': 'EUR'};
+
+    var response =
+        await http.post(Uri.parse('https://api.stripe.com/v1/payment_intents'),
+            headers: {
+              'Authorization': 'Bearer ${PayConstants.private_key}',
+              'Content-type': 'application/x-www-form-urlencoded'
+            },
+            body: body);
+
+    paymentIntent = json.decode(response.body);
+  } catch (error) {
+    rethrow;
+  }
+}

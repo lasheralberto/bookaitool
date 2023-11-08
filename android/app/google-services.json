@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "919614908342",
+    "project_id": "inkwiz-d7895",
+    "storage_bucket": "inkwiz-d7895.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919614908342:android:49d31e6d3b745ff3d68317",
+        "android_client_info": {
+          "package_name": "com.example.bookaitool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919614908342-tekusf9368pf14pn92ihefcb3a1vv1v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM5XkLhQmT1zQnxnitiSeTmjRtbfNr7Ac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919614908342-tekusf9368pf14pn92ihefcb3a1vv1v5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

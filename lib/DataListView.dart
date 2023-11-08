@@ -29,7 +29,8 @@ class _DataListViewState extends State<DataListView> {
             Text('Page ${index + 1}',
                 style: TextStyle(color: ColorConstants.colorTexts)),
             Card(
-              margin: const EdgeInsets.all(10),
+              color: ColorConstants.colorCard,
+              margin: const EdgeInsets.all(30),
               shape: RoundedRectangleBorder(
                 borderRadius:
                     StyleConstants.border, // Adjust the radius as needed

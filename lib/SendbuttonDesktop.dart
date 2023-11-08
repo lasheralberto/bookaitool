@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:bookaitool/constants.dart';
 import 'package:bookaitool/functions.dart';
 import 'package:flutter/material.dart';
@@ -7,23 +6,29 @@ import 'package:progress_state_button/progress_button.dart';
 
 class SendButtonDesktop extends StatefulWidget {
   List<Map<String, String>> contentAdded;
+  Map<String, String> introList;
   List<String> ideasList;
   List<String> styleSelectedList;
+  List<String> langList;
   String formatSelected;
   String pageSize;
+  String pageOrChapter;
   void Function(bool) onBackPressed;
   void Function(Uint8List)? pdfData;
-  int? priceOfSubmit;
+  double? priceOfSubmit;
 
   SendButtonDesktop(
       {Key? key,
+      required this.introList,
       required this.contentAdded,
       required this.ideasList,
       required this.styleSelectedList,
+      required this.langList,
       required this.formatSelected,
       required this.pageSize,
       required this.onBackPressed,
       required this.priceOfSubmit,
+      required this.pageOrChapter,
       this.pdfData})
       : super(key: key);
 
@@ -103,16 +108,26 @@ class _SendButtonDesktopState extends State<SendButtonDesktop> {
                 buttonState = ButtonState.loading;
               });
 
+              var amount = widget.priceOfSubmit! * 100;
+              createTestPaymentSheet(amount, 'eur');
+
               await fetchPdfDataBytes(
+                      widget.introList,
+                      widget.langList,
                       widget.ideasList,
                       widget.styleSelectedList,
-                      widget.formatSelected,
+                      formatOptions[widget.formatSelected] as List<double>,
                       widget.pageSize,
+                      widget.pageOrChapter,
                       context)
                   .then((value) async {
                 setState(() {
-                  widget.pdfData!(value);
-                  buttonState = ButtonState.idle;
+                  if (value['statusCode'] == 200) {
+                    widget.pdfData!(value['pdfData']);
+                    buttonState = ButtonState.idle;
+                  } else {
+                    buttonState = ButtonState.fail;
+                  }
                 });
               });
             }

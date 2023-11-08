@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/models/value_item.dart';
+
+class AppRoutes {
+  static String home = '/home';
+  static String signUp = '/signUp';
+  static String signIn = '/signIn';
+  static String landing = '/landing';
+}
 
 class ColorConstants {
-  static Color colortheme = const Color.fromRGBO(84, 84, 84, 1);
-  static Color colorAppBar = const Color.fromRGBO(84, 84, 84, 1);
-  static Color colorCard = Colors.blueGrey.shade50;
+  static Color colortheme = const Color.fromARGB(255, 255, 255, 255);
+  static Color colorAppBar = const Color.fromARGB(255, 255, 255, 255);
+  static Color colorCard = const Color.fromARGB(255, 236, 218, 166);
   static Color colorHeaders = Colors.amber.shade800;
-  static Color colorTexts = Colors.blueGrey.shade50;
+  static Color colorTexts = const Color.fromARGB(255, 138, 101, 22);
   static Color colorButtons = const Color.fromARGB(218, 255, 145, 0);
+}
+
+class ApiKeys {
+  static String open_ai_key =
+      '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';
+
+  static String GoogleAuthSignIn =
+      '824902523000-220rkjn19j20un2f1ss2r389u9so6m8j.apps.googleusercontent.com';
 }
 
 class StyleConstants {
@@ -25,25 +41,34 @@ class AppUrl {
 }
 
 class TextFieldsTexts {
+  static const IntroTextField = 'Write an introuduction page';
   static const IdeaTextField = 'Describe your vision';
   static const StyleTextField = 'Style it up';
   static const FormatTextField = 'Format page';
   static const TextImageQuality = 'Image quality';
 }
 
-List<Map<String, int>> pageSizeOptions = [
-  {"": 2},
-  {"256x256": 1},
-  {"512x512": 2},
-  {"1024x1024": 2}
+List<Map<String, double>> pageSizeOptions = [
+  {"": 0},
+  {"256x256": 100.05},
+  {"512x512": 0.07},
+  {"1024x1024": 0.1}
 ];
 
-List<String> formatOptions = [
-  '',
-  'Vertical',
-  'Portrait',
-  'Landscape',
+List<ValueItem> langList = [
+  const ValueItem(label: 'English', value: '1'),
+  const ValueItem(label: 'Spanish', value: '2'),
+  const ValueItem(label: 'French', value: '3'),
+  const ValueItem(label: 'German', value: '4'),
+  const ValueItem(label: 'Russian', value: '5'),
+  const ValueItem(label: 'Swedish', value: '6'),
 ];
+
+Map<String, List<double>> formatOptions = {
+  '': [0.0, 0.0],
+  'Vertical': [595.27, 830.55],
+  'Landscape': [792.0, 612.0],
+};
 
 final List<Map<String, String>> steps = [
   {
